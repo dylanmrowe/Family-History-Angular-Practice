@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	
+	
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+	
+<style>
+	#content{
+		border: 2px solid black;
+		padding:5px;
+		padding-left: 20px;
+		//padding-bottom:20px;
+		padding-right: 20px;
+		float:right;
+	}
+	
+	
+	
+	#image{
+		float:left;
+	}
+	
+	
+</style>	
+
+<body ng-app="myApp" ng-controller="todoCtrl">
+	
+<div id="image">
+	<img src= "./tree.png" width = "250px">
+	
+</div>	
+
+<div id="content">
+<h1>My Family History List</h1>
+
+<form ng-submit="todoAdd()">
+    <input type="text" ng-model="todoInput1" size="25" placeholder="Person">
+	<input type="text" ng-model="todoInput2" size="25" placeholder="Father">
+	<input type="text" ng-model="todoInput3" size="25" placeholder="Mother">
+    <input type="submit" value="Add New">
+</form>
+
+<br>
+
+<div ng-repeat="x in todoList">
+    <input type="checkbox" ng-model="x.done"> <span ng-bind="x.todoText"></span>
+</div>
+
+<p><button ng-click="remove()">Remove marked</button></p>
+	
+</div>
+
+<script>
+var app = angular.module('myApp', []); 
+app.controller('todoCtrl', function($scope) {
+    $scope.todoList = [{todoText:'Dylan Rowe, Chris Rowe, Tressa Brady', done:false}];
+
+    $scope.todoAdd = function() {
+        $scope.todoList.push({todoText:$scope.todoInput1 + ", " + $scope.todoInput2 + ", " + $scope.todoInput3, done:false});
+        $scope.todoInput1 = "";
+		$scope.todoInput2 = "";
+		$scope.todoInput3 = "";
+    };
+
+    $scope.remove = function() {
+        var oldList = $scope.todoList;
+        $scope.todoList = [];
+        angular.forEach(oldList, function(x) {
+            if (!x.done) $scope.todoList.push(x);
+        });
+    };
+});
+</script>
+
+</body>
+</html>
